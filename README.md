@@ -4,9 +4,9 @@
 This repository initially contains the SymTab Assignment files: 
 
 - SymTabDriver.c 
- - The main test driver for the assignment. This driver 
-    - creates a symbol table
-    - reads names and attribute values from stdin
+  - The main test driver for the assignment. This driver 
+        - creates a symbol table
+        - reads names and attribute values from stdin
   - enters the names into the table
   - displays the table contents and statistics
   - creates a copy of the original table
