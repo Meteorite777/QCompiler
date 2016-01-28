@@ -1,0 +1,23 @@
+fred       1
+fre        1
+red        1
+sue        1
+bob        1
+steve      1
+fred       2
+fr         1
+ed         1
+bob        2
+fred       3
+f          1
+d          1
+steve      2
+fred       4
+freddy     1
+steven     1
+freddy     2
+ab         1
+abab       1
+ababab     1
+freddy     3
+
