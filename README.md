@@ -29,6 +29,8 @@ This repository initially contains the SymTab Assignment files:
 
 Create the SymTab.c file and implement the functions defined in SymTab.h. The implementation will use a hash table structure containing singly linked lists of names with equal hash values along with their attribute structures. The project can be tested with "SymTabDriver SymData.txt" or "make symtest" is a shorthand for this. 
 
+You may want to use several functions from string.h such as strlen(), strdup(), strcmp(). 
+
 ## What To Do
 
 - In GitLab, fork this project to make a copy under your GitLab account, it will still be called "Assignment"
