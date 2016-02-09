@@ -27,14 +27,14 @@
 struct SymEntry { char *name;
                   void *attributes;
                   struct SymEntry *next;
-};
+}typedef SymEntry;
 
 /* The symbol table structure proper. The hash table array Contents
    is dynamically allocated according to size
 */
 struct SymTab { int size;
                 struct SymEntry **contents;
-};
+}typedef SymTab;
 
 /* CreateSymTab   Create and return a reference to a symbol table of
                   approximately Size many entries. Returns a pointer to
@@ -97,5 +97,14 @@ struct Stats { int minLen;
                int maxLen;
                int avgLen;
                int entryCnt;
-};
+}typedef Stats;
 struct Stats *     Statistics(struct SymTab *aTable);
+
+/* 	This method is used to compute the hash of a string.
+
+	compHash		Take an array of characters (string)
+					and sum up the literal value of each
+					character modulo the size of the hash  
+					table. This value is the hash value.
+*/
+int 				compHash(const char *aString, int tableSize);
