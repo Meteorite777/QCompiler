@@ -1,44 +1,42 @@
 # CS 442 - Compiler Construction
-## SymTab Assignment Respository
+## Scanner Assignment Respository
 
-This repository initially contains the SymTab Assignment files: 
+This repository contains files to be added to your main assignment repository to include the Scanner portion of the project. The repository contains
 
-- SymTabDriver.c 
-    - The main test driver for the assignment. This driver 
-        - creates a symbol table
-        - reads names and attribute values from stdin
-        - enters the names into the table
-        - displays the table contents and statistics
-        - creates a copy of the original table
-        - destroys the original table
-        - display the copy contents and statistics
-        - creates a copy of the copy
-        - destroys the first copy
-        - displays the second copy contents and statistics
-        - verifies counts in the attributes structure
-        - frees all attribute structures in the second copy
-        - destroys the second copy
-- SymTab.h 
-    - The include file defining the required structures and functions for the implementation. 
-- SymData.txt 
-    - A file of test data. This provides a minimal test. Your submission will be tested with a different data file. 
-- Makefile 
-    - The Makefile containing the dependency rules as well as "clean" and "test" targets.
+- ScannerDriver.c
+ - This is the test driver for this portion of the project. The driver opens source and listing files and repeatedly requests the next token from the scanner. Depending on the token type different actions are taken. 
+- Scanner.l
+ - This is the starting point for the scanner definition. It contains the outline of the needed scanner rules. 
+- Scanner.h
+ - This exposes as an include file the functions and data provided by the lex/flex generated scanner. 
+- Tokens.h
+ - This is an include file containing defines for the various token types. 
+- Makefile
+ - The Makefile containing new rules and definitions for the scanner component. 
+
+- ScanEx0.l
+ - An example of a standalone scanner that recognizes simple token types. 
+- ScanEx1.l
+ - An example of a standalone scanner that on seeing an integer, evaluates and displays the factorial of the integer. 
+- ScanEx2.l
+ - An example of a standalone scanner that evaluates postfix arithmetic expressions. 
 
 ## The Assignment
 
-Create the SymTab.c file and implement the functions defined in SymTab.h. The implementation will use a hash table structure containing singly linked lists of names with equal hash values along with their attribute structures. The project can be tested with "SymTabDriver SymData.txt" or "make symtest" is a shorthand for this. 
-
-You may want to use several functions from string.h such as strlen(), strdup(), strcmp(). 
+- Part 1
+ - Create a standalone scanner (call the file ScanExample.l) that recognizes decimal integer literals and octal integer literals (e.g. 023 is decimal 19). Decimal integer literals are echoed to the output unchanged followed by a newline. Octal integer literals are converted to decimal and echoed to the output followed by a newline. All other input should be discarded. 
+- Part 2
+ - Scanner.l contains rules for the $INIT, $DUMP and Identifier tokens. Extend these rules to incorporate comments (both "/* ... */" comments and through to the end of line comments "// ...."). Include the code necessary to only return tokens when not inside a comment. Also include rules for integers,  floats and at least one symbol. You will need to add defines for these token types to Tokens.h.
+ - ScannerDriver.c contains most of the required code. The cases for INIT and DUMP are supplied. INIT creates a symbol table and DUMP displays the contents of the table. You need to supply code for the IDENT_TOK case to add the token text to the symbol table with an appropriate attributes structure. The additional tokens you define do not require action cases. 
 
 ## What To Do
 
-- In GitLab, fork this project to make a copy under your GitLab account, it will still be called "Assignment"
-- Clone _your_ copy of the project to your development machine. 
-- Implement SymTab.c and test. 
-- When complete, 
-    - "make clean" to remove object files and executables
-    - use git to add and commit your changes to your local repository
-    - use git to push the project back up to your GitLab account
-    - add me as a "reporter" member of your project repository
-    - create an issue on your project repository, listing me as assignee, with a title of "Submit for grading"
+- Do not fork this repository on Gitlab, instead
+- On your development machine, in a location different than your assignment repository, clone this project. Your assignment repository will continue to accumulate all files for the project. 
+- Copies the files from this repository to your assignment repository.
+- Discard the clone of this repository.
+- Implement the required capabilities. 
+- When complete, "make clean" to remove object files and executables, use git to add and commit your changes and push the project back up to your repository.
+- Finaly, create an issue on your repository, with me as the reporter assignee, indicating that it is ready for grading. 
+
+

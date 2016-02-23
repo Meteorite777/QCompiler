@@ -1,0 +1,9 @@
+#define INIT_TOK	1
+#define DUMP_TOK    2
+#define IDENT_TOK    3
+#define INTEGER_TOK	4
+#define FLOAT_TOK	5
+#define ADD_TOK		6
+#define COMM_START_TOK	7
+#define COMM_END_TOK	8
+#define COMM_EOL_TOK	9	

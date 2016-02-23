@@ -139,7 +139,6 @@ bool EnterName(struct SymTab *symTable, const char *name, struct SymEntry **adde
 			newEntry->attributes = NULL;
 			newEntry->next = NULL;
 			foundEntry->next = newEntry;
-			newEntry->name = strdup(name);
 			// Mark the added entry for passback to callee function and return false to signify the name wasn't found.
 			*addedEntry = newEntry;
 		}
@@ -248,7 +247,6 @@ struct Stats *Statistics(struct SymTab *aTable){
 			}
 			
 		}
-		tableStats->entryCnt = tableStats->entryCnt + rowLen;
 	}
 	
 	tableStats->avgLen = tableStats->entryCnt / aTable->size;

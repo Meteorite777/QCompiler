@@ -63,11 +63,12 @@ char GetSourceChar(){
 	}
 	rtnChar = ioBuffer[ioBuffPos];
 	
-	//End of Line so we free our line buffer and message array
+	//End of Line so we free our line buffer
 	if(rtnChar == '\n'){
 		//Call to PostLine to handle outputting the line
 		PostLine(ioBuffer, ioLineNum);
 		
+		//printf("IOMngr.c: ioBuffer - %s\n", ioBuffer);
 		free(ioBuffer);
 		ioBuffer = NULL;
 	}
