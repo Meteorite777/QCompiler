@@ -7,23 +7,29 @@
   It formats and writes to the correct output stream (listing file vs stdout) the messages posted from PostMessage().*/
 void PostLine(char* aLine, int lineNum);
 
+/* symbol table entries have two attributes, first line of occurrence and occurrence count */
+struct Attributes {
+  int col;
+  char* msg;
+}typedef Attributes;
+
 #include "IOMngr.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 FILE *ioSrc;
 FILE *ioLst;
 
-char *ioBuffer;
-char **messageArr;
-int ioLineNum, ioBuffLen, ioBuffPos, messageNum;
+char *ioBuffer, rtnChar;
+struct Attributes **messageArr;
+int i, ioLineNum, ioColNum, ioBuffLen, ioBuffPos, messageNum, currMsgNum;
 bool messageFlag;
 
 char GetSourceChar(){
-	char rtnChar;
-	int i;
+	rtnChar = '\0';
 	if(ioSrc == NULL){
 		fprintf(stderr, "Error: You must open a source file before attempting to read a character.");
 		exit(-1);
@@ -50,11 +56,6 @@ char GetSourceChar(){
 		ioBuffPos = 0;
 		messageFlag = false;
 		ioLineNum++;
-		//Malloc and create space for PostMessage array to hold messages associated with line columns.
-		messageArr = (char**) malloc(sizeof(char*) * strlen(ioBuffer));
-		for(i = 0; i < strlen(ioBuffer); i++){
-			messageArr[i] = NULL;
-		}
 	}
 		
 	//If the current character is a tab replace it with a space.
@@ -87,8 +88,10 @@ void PostMessage(int aColumn, const char * aMessage){
 	if(messageNum < (MAXENTRIES - 1)){
 		char *newMessage = (char*) malloc(sizeof(char) * (strlen(aMessage) + 1));
 		strcpy(newMessage, aMessage);
-		
-		messageArr[aColumn] = newMessage;
+		struct Attributes *newAttr = (struct Attributes*) malloc(sizeof(struct Attributes));
+		newAttr->col = aColumn;
+		newAttr->msg = newMessage;
+		messageArr[messageNum] = newAttr;
 		messageFlag = true;
 		messageNum++;
 	}
@@ -118,18 +121,23 @@ void PostLine(char *aLine, int lineNum){
 			fprintf(outputStream, "%5d: %s\n%7c", lineNum, aLine, ' ');
 		}
 		// After printing the line, check for messages and print characters if any exist.
-		for(i = 0; i < strlen(ioBuffer); i++){
-			if(messageArr[i] != NULL){
-				fputc(msgChar, outputStream);
-				msgChar++;
-			}
-			else{
-				fputc(' ', outputStream);
-			}
-		}
-		// Print a newline as either a gap between empty lines or a line after msgChar's are printed.
-		// However we don't need a newline if there are no messages to be posted.
+		
+		ioColNum = 0;
+		currMsgNum = 0;
 		if(messageFlag == true){
+			while(currMsgNum != messageNum){
+				if(messageArr[currMsgNum]->col == ioColNum){
+					fputc(msgChar, outputStream);
+					currMsgNum++;
+					msgChar++;		
+				}
+				else{
+					fputc(' ', outputStream);
+				}
+				ioColNum++;
+			}
+			// Print a newline as either a gap between empty lines or a line after msgChar's are printed.
+			// However we don't need a newline if there are no messages to be posted.
 			fputc('\n', outputStream);
 		}
 	
@@ -137,9 +145,9 @@ void PostLine(char *aLine, int lineNum){
 		msgChar = 'A';
 		
 		//Loop through the line columns and print any messages associated with them in our array.
-		for(i = 0; i < strlen(ioBuffer); i++){
+		for(i = 0; i < MAXENTRIES; i++){
 			if(messageArr[i] != NULL){
-				fprintf(outputStream, "%4c-%c %s\n", ' ', msgChar, messageArr[i]);
+				fprintf(outputStream, "%4c-%c %s\n", ' ', msgChar, messageArr[i]->msg);
 				msgChar++;
 			}
 		}
@@ -149,17 +157,21 @@ void PostLine(char *aLine, int lineNum){
 		}
 	}
 	//Loop through the line columns and free any messages associated with them in our array.
-	for(i = 0; i < strlen(ioBuffer); i++){
+	for(i = 0; i < messageNum; i++){
+		free(messageArr[i]->msg);
 		free(messageArr[i]);
 		messageArr[i] = NULL;
 	}
-	free(messageArr);
-	messageArr = NULL;
 	messageNum = 0;
 }
 
 bool OpenFiles(const char * aSourceName, const char * aListingName){
-	
+	//Malloc and create space for PostMessage array to hold messages associated with line columns.
+	messageArr = (struct Attributes**) malloc(sizeof(struct Attributes*) * MAXENTRIES);
+	for(i = 0; i < MAXENTRIES; i++){
+		messageArr[i] = NULL;
+	}
+
 	if (aSourceName == NULL){
 		printf("You must provide atleast a source file argument.\n");
 		return false;
@@ -183,10 +195,10 @@ bool OpenFiles(const char * aSourceName, const char * aListingName){
 }
 
 void CloseFiles(){
+	free(messageArr);
+	messageArr = NULL;
+
 	if(ioSrc != NULL){
-		if(feof(ioSrc) != 0){
-			PostLine(ioBuffer, ioLineNum);
-		}
 		fclose(ioSrc);
 		ioSrc = NULL;
 	}
@@ -202,5 +214,12 @@ int GetCurrentLine(){
 }
 
 int GetCurrentColumn(){
-	return ioBuffPos - 1;
+	const char matchStr[] = " <>[]{}();,.\'\"\r\n\0";
+	//printf("return char: %c\n", rtnChar);
+	if(strchr(matchStr, rtnChar)){
+		//printf("strchr matched a discarded character so decrement position.\n");
+		return ioBuffPos - 1;	
+	}
+
+	return ioBuffPos;
 }
