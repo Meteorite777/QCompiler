@@ -1,0 +1,12 @@
+    1: BEGIN
+       
+    2:   x := 5 * (y - 2);
+       
+    3:   y := z; w:= 1;
+       
+    4:   z := (x - y + z) / (y - z) * 3 ;;
+                                         A
+    -A CurToken: 4 -- Prog -- Token Match Failed
+
+    -A Parse Unsuccessful
+

@@ -146,6 +146,7 @@ bool EnterName(struct SymTab *symTable, const char *name, struct SymEntry **adde
 		return false;
 	}
 	else{
+		// The symbol was already found in the table.
 		//printf("%s was found in the table...\n", name);
 		*addedEntry = foundEntry;
 		return true;
@@ -197,7 +198,7 @@ struct SymEntry *NextEntry(struct SymTab *aTable, struct SymEntry *anEntry){
 }
 
 void SetAttr(struct SymEntry *anEntry, void *attributes){
-	const int attrSize = sizeof(int) * 2;
+	const int attrSize = sizeof(void*) * 2;
 	//printf("Sizeof: %d\n", attrSize);
 	if(anEntry->attributes == NULL){
 		anEntry->attributes = malloc(attrSize);

@@ -1,0 +1,12 @@
+    1: BEGIN
+       
+    2:   amt := 5 * y - 2;
+       
+    3:   x := 5 * (y - 2);
+       
+    4:   box := 5 * x / amt + 3 * * 4;
+                                   A
+    -A err: "syntax error" yytext: "*"
+
+    -A Parse Unsuccessful
+

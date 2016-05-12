@@ -1,0 +1,12 @@
+    1: BEGIN
+       
+    2:   x := 5 * (y - 2);
+       
+    3:   y := z;
+       
+    4:   w w := 1;
+            A
+    -A CurToken: 13 -- Prog> StmtSeq> StmtSeq> StmtSeq> Stmt -- Token Match Failed
+
+    -A Parse Unsuccessful
+

@@ -1,0 +1,8 @@
+    1: BEGIN
+       
+    2:   x := 5 * (y - 2);
+       
+    3:   z := +4 - 3;
+              A
+    -A Parse Unsuccessful
+

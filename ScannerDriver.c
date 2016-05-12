@@ -26,6 +26,21 @@ entryCmp(const void * A, const void * B)
   return strcmp(strA,strB);
 }
 
+// The Lookahead chracter in the yylex() algorithm messes with GetCurrentColumn and posting messages.
+// When lex knows it's a fixed length reserved word it stops scanning at the last charater and returns
+// a token to post, using the correct column in the listing. However when it's a regex token (float, integer, ident),
+// it must look ahead one token to decide to stop parsing. Doing so increments the current column and incorrectly 
+// posts the message one column too far ahead. Check for reserved words and return yyleng-2 if it's not one.
+int GetMessageColumn(int token){
+	// If it's nt a reserved
+	if(token == 3 || token == 4 || token == 5){
+		return GetCurrentColumn() - (yyleng);
+	}
+	else{
+		return GetCurrentColumn() - (yyleng - 1);
+	}
+}
+
 int
 main(int argc, char **argv)
 { int Token;
@@ -43,7 +58,7 @@ main(int argc, char **argv)
   
   while ((Token = yylex()) != 0) {
     sprintf(message,"Token#=%d, Length=%d, Text=\"%s\"",Token,yyleng,yytext);
-    PostMessage(GetCurrentColumn()-(yyleng-1),message);
+    PostMessage(GetMessageColumn(Token) ,message);
     switch(Token) {
       case INIT_TOK: {
         /* create a symbol table 

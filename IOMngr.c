@@ -35,27 +35,42 @@ char GetSourceChar(){
 		exit(-1);
 	}
 
+	//If there is nothing in the buffer we need to grab a new line from the source file.
 	if(ioBuffer == NULL){
 		//Malloc space for Line Buffer and read line into buffer.
 		ioBuffer = (char*) malloc(sizeof(char) * MAXLINE);
 
+		//This is to detect EOF. If detected it clears ioBuffer and 
 		//fgets() returns null on error or EOF encountered and trying to read agin. 
 		if (fgets(ioBuffer, (MAXLINE - 1), ioSrc) == NULL){
+			// feof returns non-zero when EOF has been encountered.
 			// fgets() returning null and EOF encountered means we have processed all input. 
 			if (feof(ioSrc) != 0){
 				free(ioBuffer);
 				ioBuffer = " ";
 			}
+			// This is to catch the other case if it was an error and not EOF.
 			if (ferror(ioSrc) != 0){
 				fprintf(stderr, "Error: Problem reading source file.");
 				exit(-1);
 			}			
 		}
-
+	
+	
 		//Initialize buffer variables ioBuffPos is line column and messageFlag tells if there are any tokens found.
 		ioBuffPos = 0;
-		messageFlag = false;
 		ioLineNum++;
+		messageFlag = false;
+		
+	}
+	// If there was something in the buffer we want to increment the buffer position (We avoid doing this when the buffer
+	// is first created above, it is initialized at 0 and not incremented by this. We also don't want to increment after we have
+	// seen EOF because our EOF checking below relies on strlen of the buffer. It's set to " " above as a flag, and relies on strlen.
+	else{
+		// If there is something in the buffer and we haven't hit EOF increment the position.
+		if(feof(ioSrc) == 0){
+			ioBuffPos++;
+		}
 	}
 		
 	//If the current character is a tab replace it with a space.
@@ -75,12 +90,12 @@ char GetSourceChar(){
 	}
 	
 	//END OF FILE read into buffer and on last character
-	if(feof(ioSrc) != 0 && ioBuffPos == (strlen(ioBuffer)) ){
-
+	if(feof(ioSrc) != 0 && ioBuffPos == (strlen(ioBuffer) - 1) ){
+		//PostLine(ioBuffer, ioLineNum);
 		return EOF;
 	}
 	
-	ioBuffPos++;
+
 	return rtnChar;
 }
 
@@ -126,15 +141,52 @@ void PostLine(char *aLine, int lineNum){
 		currMsgNum = 0;
 		if(messageFlag == true){
 			while(currMsgNum != messageNum){
-				if(messageArr[currMsgNum]->col == ioColNum){
+				if(messageArr[currMsgNum] != NULL){
+					if(currMsgNum == 0){
+						if(messageArr[currMsgNum]->col == ioColNum){
+							fputc(msgChar, outputStream);
+							currMsgNum++;
+							msgChar++;		
+						}
+						else{
+							fputc(' ', outputStream);
+							//ioColNum++;
+						}
+						ioColNum++;
+					}
+					else{
+						// While not on first one, check if we are second message on same spot. If so ignore.
+						//If this message is not in same place as last one
+						if(messageArr[currMsgNum]->col != messageArr[currMsgNum-1]->col){
+							//if we are on the right place/column position in the line post a letter
+							if(messageArr[currMsgNum]->col == ioColNum){
+								fputc(msgChar, outputStream);
+								currMsgNum++;
+								msgChar++;		
+							}
+							else{
+								fputc(' ', outputStream);
+								//ioColNum++;
+							}
+							ioColNum++;
+						}
+						else{
+							currMsgNum++;
+						}
+					}
+				}
+				// There was a problem where it infinite loops when multiple messages are posted to the same line.
+				// because ioColNum gets higher than the column in the message and increments forever. Fixed above.
+				/*if(messageArr[currMsgNum]->col == ioColNum){
 					fputc(msgChar, outputStream);
 					currMsgNum++;
 					msgChar++;		
 				}
 				else{
 					fputc(' ', outputStream);
+					ioColNum++;
 				}
-				ioColNum++;
+				//ioColNum++;*/
 			}
 			// Print a newline as either a gap between empty lines or a line after msgChar's are printed.
 			// However we don't need a newline if there are no messages to be posted.
@@ -147,8 +199,19 @@ void PostLine(char *aLine, int lineNum){
 		//Loop through the line columns and print any messages associated with them in our array.
 		for(i = 0; i < MAXENTRIES; i++){
 			if(messageArr[i] != NULL){
-				fprintf(outputStream, "%4c-%c %s\n", ' ', msgChar, messageArr[i]->msg);
-				msgChar++;
+				if(i == 0){
+					fprintf(outputStream, "%4c-%c %s\n", ' ', msgChar, messageArr[i]->msg);
+					msgChar++;
+				}
+				else{
+					if(messageArr[i]->col == messageArr[i-1]->col){
+						fprintf(outputStream, "%4c-%c %s\n", ' ', msgChar-1, messageArr[i]->msg);
+					}
+					else{
+						fprintf(outputStream, "%4c-%c %s\n", ' ', msgChar, messageArr[i]->msg);
+						msgChar++;
+					}
+				}
 			}
 		}
 		// We don't need a newline after the last source line.
@@ -195,6 +258,7 @@ bool OpenFiles(const char * aSourceName, const char * aListingName){
 }
 
 void CloseFiles(){
+	PostLine(ioBuffer, ioLineNum);
 	free(messageArr);
 	messageArr = NULL;
 
@@ -214,12 +278,12 @@ int GetCurrentLine(){
 }
 
 int GetCurrentColumn(){
-	const char matchStr[] = " <>[]{}();,.\'\"\r\n\0";
+	//const char matchStr[] = "[]{}()=*;,.\'\"\r\n\0";
 	//printf("return char: %c\n", rtnChar);
-	if(strchr(matchStr, rtnChar)){
+	//if(strchr(matchStr, rtnChar)){
 		//printf("strchr matched a discarded character so decrement position.\n");
-		return ioBuffPos - 1;	
-	}
+		//return ioBuffPos - 1;	
+	//}
 
 	return ioBuffPos;
 }

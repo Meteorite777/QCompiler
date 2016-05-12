@@ -1,51 +1,51 @@
     1: $INIT
-       A      
+       A
     -A Token#=1, Length=5, Text="$INIT"
 
     2: /* IOMngrDriver.c
-       A                  
+       A
     -A Token#=7, Length=2, Text="/*"
 
     3:    Something should not be in the table.
-                                                 
+       
     4: */
-       A   
+       A
     -A Token#=8, Length=2, Text="*/"
 
     5: #include <stdio.h>
-         A        B     C  
+        A        B     C
     -A Token#=3, Length=7, Text="include"
     -B Token#=3, Length=5, Text="stdio"
     -C Token#=3, Length=1, Text="h"
 
     6: #include <string.h>
-         A        B      C  
+        A        B      C
     -A Token#=3, Length=7, Text="include"
     -B Token#=3, Length=6, Text="string"
     -C Token#=3, Length=1, Text="h"
 
     7: #include <ctype.h>
-         A        B     C  
+        A        B     C
     -A Token#=3, Length=7, Text="include"
     -B Token#=3, Length=5, Text="ctype"
     -C Token#=3, Length=1, Text="h"
 
     8: 
-         
+       
     9: #include "IOMngr.h"
-         A        B      C  
+        A        B      C
     -A Token#=3, Length=7, Text="include"
     -B Token#=3, Length=6, Text="IOMngr"
     -C Token#=3, Length=1, Text="h"
 
    10: 
-         
+       
    11: int
-        A   
+       A
     -A Token#=3, Length=3, Text="int"
 
    12: main(int argc, char **argv)
-        A    B   C     D      E     
+       A    B   C     D      E
     -A Token#=3, Length=4, Text="main"
     -B Token#=3, Length=3, Text="int"
     -C Token#=3, Length=4, Text="argc"
@@ -53,83 +53,83 @@
     -E Token#=3, Length=4, Text="argv"
 
    13: { char curChar;
-          A    B        
+         A    B
     -A Token#=3, Length=4, Text="char"
     -B Token#=3, Length=7, Text="curChar"
 
    14:   char *src, *lst;
-          A     B     C    
+         A     B     C
     -A Token#=3, Length=4, Text="char"
     -B Token#=3, Length=3, Text="src"
     -C Token#=3, Length=3, Text="lst"
 
    15:   
-           
+       
    16:  if (argc == 1) {
-         A   B       C    
+        A   B       C
     -A Token#=3, Length=2, Text="if"
     -B Token#=3, Length=4, Text="argc"
     -C Token#=4, Length=1, Text="1"
 
    17:    src = "IOMngrSource";
-           A      B              
+          A      B
     -A Token#=3, Length=3, Text="src"
     -B Token#=3, Length=12, Text="IOMngrSource"
 
    18:   lst = "IOMngrListing";
-          A      B               
+         A      B
     -A Token#=3, Length=3, Text="lst"
     -B Token#=3, Length=13, Text="IOMngrListing"
 
    19:  }
-           
+       
    20:   else if (argc == 2) {
-          A    B   C       D    
+         A    B   C       D
     -A Token#=3, Length=4, Text="else"
     -B Token#=3, Length=2, Text="if"
     -C Token#=3, Length=4, Text="argc"
     -D Token#=4, Length=1, Text="2"
 
    21:     src = argv[1];
-            A     B    C   
+           A     B    C
     -A Token#=3, Length=3, Text="src"
     -B Token#=3, Length=4, Text="argv"
     -C Token#=4, Length=1, Text="1"
 
    22:     lst = NULL;
-            A     B     
+           A     B
     -A Token#=3, Length=3, Text="lst"
     -B Token#=3, Length=4, Text="NULL"
 
    23:   }
-            
+       
    24:   else if (argc == 3) {
-          A    B   C       D    
+         A    B   C       D
     -A Token#=3, Length=4, Text="else"
     -B Token#=3, Length=2, Text="if"
     -C Token#=3, Length=4, Text="argc"
     -D Token#=4, Length=1, Text="3"
 
    25:     src = argv[1];
-            A     B    C   
+           A     B    C
     -A Token#=3, Length=3, Text="src"
     -B Token#=3, Length=4, Text="argv"
     -C Token#=4, Length=1, Text="1"
 
    26:     lst = argv[2];
-            A     B    C   
+           A     B    C
     -A Token#=3, Length=3, Text="lst"
     -B Token#=3, Length=4, Text="argv"
     -C Token#=4, Length=1, Text="2"
 
    27:   }
-            
+       
    28:   else {
-          A      
+         A
     -A Token#=3, Length=4, Text="else"
 
    29:     fprintf(stderr,"usage: IOMngrDriver SourceName [ListingName]\n");
-            A       B       C      D            E           F            G    
+           A       B       C      D            E           F            G
     -A Token#=3, Length=7, Text="fprintf"
     -B Token#=3, Length=6, Text="stderr"
     -C Token#=3, Length=5, Text="usage"
@@ -139,58 +139,58 @@
     -G Token#=3, Length=1, Text="n"
 
    30:     exit(1);
-            A    B   
+           A    B
     -A Token#=3, Length=4, Text="exit"
     -B Token#=4, Length=1, Text="1"
 
    31:   }
-            
+       
    32:   
-           
+       
    33: /* This should not get in the table. */
-       A                                    B   
+       A                                    B
     -A Token#=7, Length=2, Text="/*"
     -B Token#=8, Length=2, Text="*/"
 
    34: 
-         
+       
    35:   if (OpenFiles(src,lst)) {
-          A   B         C   D       
+         A   B         C   D
     -A Token#=3, Length=2, Text="if"
     -B Token#=3, Length=9, Text="OpenFiles"
     -C Token#=3, Length=3, Text="src"
     -D Token#=3, Length=3, Text="lst"
 
    36:     while((curChar = GetSourceChar()) != EOF) {
-            A      B         C                   D      
+           A      B         C                   D
     -A Token#=3, Length=5, Text="while"
     -B Token#=3, Length=7, Text="curChar"
     -C Token#=3, Length=13, Text="GetSourceChar"
     -D Token#=3, Length=3, Text="EOF"
 
    37:       if (isupper(curChar)) {
-              A   B       C           
+             A   B       C
     -A Token#=3, Length=2, Text="if"
     -B Token#=3, Length=7, Text="isupper"
     -C Token#=3, Length=7, Text="curChar"
 
    38:         PostMessage(GetCurrentColumn(),"found uppercase");
-                A           B                   C     D            
+               A           B                   C     D
     -A Token#=3, Length=11, Text="PostMessage"
     -B Token#=3, Length=16, Text="GetCurrentColumn"
     -C Token#=3, Length=5, Text="found"
     -D Token#=3, Length=9, Text="uppercase"
 
    39:       }
-                
+       
    40:       if (strchr("(){}",curChar)) {
-              A   B             C           
+             A   B             C
     -A Token#=3, Length=2, Text="if"
     -B Token#=3, Length=6, Text="strchr"
     -C Token#=3, Length=7, Text="curChar"
 
    41:         PostMessage(GetCurrentColumn(),"found grouping symbol");
-                A           B                   C     D        E         
+               A           B                   C     D        E
     -A Token#=3, Length=11, Text="PostMessage"
     -B Token#=3, Length=16, Text="GetCurrentColumn"
     -C Token#=3, Length=5, Text="found"
@@ -198,30 +198,30 @@
     -E Token#=3, Length=6, Text="symbol"
 
    42:       }
-                
+       
    43:       if (strchr(",;",curChar)) {
-              A   B           C           
+             A   B           C
     -A Token#=3, Length=2, Text="if"
     -B Token#=3, Length=6, Text="strchr"
     -C Token#=3, Length=7, Text="curChar"
 
    44:         PostMessage(GetCurrentColumn(),"found punctuation");
-                A           B                   C     D              
+               A           B                   C     D
     -A Token#=3, Length=11, Text="PostMessage"
     -B Token#=3, Length=16, Text="GetCurrentColumn"
     -C Token#=3, Length=5, Text="found"
     -D Token#=3, Length=11, Text="punctuation"
 
    45:       }
-                
+       
    46:       if (strchr("=*",curChar)) {
-              A   B           C           
+             A   B           C
     -A Token#=3, Length=2, Text="if"
     -B Token#=3, Length=6, Text="strchr"
     -C Token#=3, Length=7, Text="curChar"
 
    47:         PostMessage(GetCurrentColumn(),"found operator symbol");
-                A           B                   C     D        E         
+               A           B                   C     D        E
     -A Token#=3, Length=11, Text="PostMessage"
     -B Token#=3, Length=16, Text="GetCurrentColumn"
     -C Token#=3, Length=5, Text="found"
@@ -229,21 +229,21 @@
     -E Token#=3, Length=6, Text="symbol"
 
    48:       }
-                
+       
    49:    }
-             
+       
    50:     CloseFiles();
-            A             
+           A
     -A Token#=3, Length=10, Text="CloseFiles"
 
    51:   }
-            
+       
    52:   else {
-          A      
+         A
     -A Token#=3, Length=4, Text="else"
 
    53:     printf("Files could not be opened.\n"); // Neither should this. 
-            A       B     C     D   E  F       G   H                         
+           A       B     C     D   E  F       G    H
     -A Token#=3, Length=6, Text="printf"
     -B Token#=3, Length=5, Text="Files"
     -C Token#=3, Length=5, Text="could"
@@ -254,19 +254,19 @@
     -H Token#=9, Length=2, Text="//"
 
    54:   }
-            
+       
    55: 
-         
+       
    56:   exit(0);
-          A    B   
+         A    B
     -A Token#=3, Length=4, Text="exit"
     -B Token#=5, Length=1, Text="0"
 
    57: }
-          
+       
    58: $DUMP
-       A      
+       A
     -A Token#=2, Length=5, Text="$DUMP"
 
    59:  
-        
+       

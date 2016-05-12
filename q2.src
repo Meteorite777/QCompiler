@@ -1,0 +1,20 @@
+int x, y, r;
+
+main
+{
+  put('>');
+  x = get(int);
+  put('>');
+  y = get(int);
+  r = x * x + y;
+  put('x'); put('=');
+  put(x);
+  put('\n');
+  put('y'); put('=');
+  put(y);
+  put('\n');
+  put('r'); put('=');
+  put(r);
+  put('\n');
+}
+

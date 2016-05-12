@@ -1,0 +1,24 @@
+    1: /*
+    2:   Input a number and calculate its factorial.
+    3: */
+    4: int x, fac;
+    5: 
+    6: main
+    7: {
+    8:   put("> ");
+    9:   x = get(int);
+   10:   put("x = ");
+   11:   put(x);
+   12:   put("\n");
+   13:   fac = 1;
+   14:   while (x > 0) {
+   15:     fac = fac * x;
+   16:     x = x - 1;
+   17:   };
+   18:   put("factorial = ");
+   19:   put(fac);
+   20:   put("\n");
+   21: }
+   22: 
+       A
+    -A Parse Successful
