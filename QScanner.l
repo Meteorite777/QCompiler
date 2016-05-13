@@ -5,7 +5,15 @@ Float   ((0|[1-9]*)\.[0-9]+|[0-9]+)
 
 %{
 #include "IOMngr.h"
-#include "y.tab.h"
+#include "QTokens.h"
+typedef union {
+  char * Text;
+  struct IdList * IdList;
+  struct TypeDesc * TypeDesc;
+  struct InstrSeq * InstrSeq;
+  struct ExprResult * ExprResult;
+} YYSTYPE;
+extern YYSTYPE yylval;
 
 int eolComment;
 int commentCnt;
