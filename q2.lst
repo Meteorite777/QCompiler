@@ -1,22 +1,43 @@
     1: int x, y, r;
+       
     2: 
+       
     3: main
+       
     4: {
+       
     5:   put('>');
+       
     6:   x = get(int);
+       
     7:   put('>');
+       
     8:   y = get(int);
+       
     9:   r = x * x + y;
+       
    10:   put('x'); put('=');
+       
    11:   put(x);
+       
    12:   put('\n');
+       
    13:   put('y'); put('=');
+       
    14:   put(y);
+       
    15:   put('\n');
+       
    16:   put('r'); put('=');
+       
    17:   put(r);
+       
    18:   put('\n');
+       
    19: }
+       
    20: 
+       
+   21:  
        A
     -A Parse Successful

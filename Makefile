@@ -1,5 +1,5 @@
-LOADLIBES = -ll -ly
-CFLAGS = -g -std=gnu11
+LOADLIBES = -ll -lfl 
+CFLAGS = -g -std=gnu11 -DYYDEBUG=1
 
 # Symbol Table Project
 SymTab.o: SymTab.c SymTab.h
@@ -37,7 +37,7 @@ rdtest2: RecDescent
 rdtest3: RecDescent
 	./RecDescent RDSrc-3
 rdtest4: RecDescent
-	./RecDescent RDSrc-4	
+	./RecDescent RDSrc-4
 
 # Parser Stage 1 & 2
 Parse.o: Parse.c Grammar.h Scanner.h RDTokens.h IOMngr.h 
@@ -55,9 +55,10 @@ Q.o: 	Q.c Grammar.h Scanner.l IOMngr.h
 Q:	Q.o SymTab.o IOMngr.o QScanner.o QGrammar.o Semantics.o CodeGen.o
 q1:	Q
 	./Q q1
-
+q2:	Q
+	./Q q2
 
 # Other
-testall: symtest iotest scantest rdtest1 rdtest2 rdtest3 rdtest4 parse1 parse2 q1
+testall: symtest iotest scantest rdtest1 rdtest2 rdtest3 rdtest4 parse1 parse2 q1 q2
 clean:
-	rm *.o SymTabDriver IOMngrDriver ScannerDriver RecDescent Parse
+	rm *.o SymTabDriver IOMngrDriver ScannerDriver RecDescent Parse Q

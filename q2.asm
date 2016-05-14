@@ -72,6 +72,6 @@
 	li		$v0, 10
 	syscall	
 	.data	
-_r:	.word		0
 _x:	.word		0
 _y:	.word		0
+_r:	.word		0

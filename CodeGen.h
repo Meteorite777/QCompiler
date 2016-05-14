@@ -22,6 +22,8 @@ struct InstrSeq *  AppendSeq(struct InstrSeq *Seq1,
                                    struct InstrSeq *Seq2);
 void               WriteSeq(struct InstrSeq *ASeq);
 
+void printInstrSeq( struct InstrSeq * instr);
+
 char *             GenLabel();
 
 int                AvailTmpReg();

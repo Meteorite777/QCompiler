@@ -198,11 +198,12 @@ struct SymEntry *NextEntry(struct SymTab *aTable, struct SymEntry *anEntry){
 }
 
 void SetAttr(struct SymEntry *anEntry, void *attributes){
-	const int attrSize = sizeof(void*) * 2;
+	const int attrSize = sizeof (void*) * 20;
 	//printf("Sizeof: %d\n", attrSize);
 	if(anEntry->attributes == NULL){
 		anEntry->attributes = malloc(attrSize);
 	}
+
 	memcpy(anEntry->attributes, attributes, attrSize);
 	
 }

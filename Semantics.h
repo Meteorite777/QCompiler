@@ -26,6 +26,13 @@ struct Attr {
   /* memory location */
 }typedef Attr;
 
+/* ExprResult Structure used for operand type checking and result/register storage */
+struct ExprResult {
+  struct InstrSeq * TheInstrSeq;
+  struct TypeDesc * TheType;
+  int TheResultReg;
+}typedef ExprResult;
+
 /* Supporting Routines */
 void InitSemantics();
 void ListSymTab();
@@ -35,5 +42,15 @@ struct IdList *     ProcUndId(char * IdText);
 struct IdList *     ChainUndId(struct IdList * TheList, char * IdText);
 struct InstrSeq *   ProcDecl(struct IdList * TheList, struct TypeDesc * TheType);
 struct TypeDesc *   ProcTypeDesc(enum BaseTypes TheBaseType);
+
+struct ExprResult * ProcExpr(struct ExprResult * Operand1, char * Operator,struct ExprResult * Operand2);
+struct ExprResult * ProcFactorIntLit(char * IntLit);
+struct ExprResult * ProcFactorChrLit(char * ChrLit);
+struct ExprResult * ProcFactorNeg(struct ExprResult * Factor);
+struct ExprResult * ProcFactorId(char * Ident);
+char * ProcLVal(char* Ident);
+struct InstrSeq * ProcAssign(char* TheLabel, struct ExprResult * TheValue);
+struct ExprResult * ProcGet( struct TypeDesc * TheType);
+struct InstrSeq * ProcPutStmt( struct ExprResult * TheValue);	 
 
 void                Finish(struct InstrSeq * DeclsCode, struct InstrSeq * BodyCode);

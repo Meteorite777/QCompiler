@@ -25,6 +25,8 @@ main(int argc, char * argv[])
     }
     InitSemantics();
     InitCodeGen(AssemblyName);
+    //extern int yydebug;
+    //yydebug = 1;
     if (yyparse() == 0) {
       PostMessage(GetCurrentColumn(),"Parse Successful");
     }

@@ -10,3 +10,16 @@
 #define SEMICOLON_TOK 7
 #define COLON_TOK     8
 #define COMMA_TOK     9
+
+#define INTLIT_TOK    10
+#define CHRLIT_TOK    11
+#define ASSIGN_TOK    12
+#define LPAREN_TOK    13
+#define RPAREN_TOK    14
+#define MINUS_TOK     15
+#define PLUS_TOK    16
+#define TIMES_TOK    17
+#define DIV_TOK    18
+
+#define GET_TOK		19
+#define PUT_TOK		20
