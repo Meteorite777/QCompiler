@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # CS 442 - Compiler Construction
 ## Semantics Part I
 Authors: Dr. Steven Senger
@@ -94,3 +95,7 @@ The best choice for a simulator is probably the Mars4_5 Java based simulator. To
 - Discard the clone of this repository.
 - Implement the required capabilities. 
 - When complete, "make clean" to remove object files and executables, use git to add and commit your changes and push the project back up to your repository. Rememger to create an issue in Gitlab with me as the assignee indicating that your submission is ready for grading. 
+=======
+# QCompiler
+Most of the implementation of a compiler for a pseudo-language called Q which contains most of the functions you would come to expect in a modern day language such as variable evaluation and assignment, nesting, if/then statments, loops, etc. This implementation is written in C and compiles the Q into MIPS assembly. If you take a look into the makefile you will see the commands to test the respective parts of the compiler such as the symbol table, scanner, parser, and grammar evaluation. Credit to Dr. Steven Senger creating the assignment and most of the stubs, structure, ReadMe', and general direction in writing this compiler.
+>>>>>>> ed1843d49a7adf6292d3c588b20897f79440e352
