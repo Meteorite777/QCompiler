@@ -1,0 +1,634 @@
+Terminals unused in grammar
+
+   COLON_TOK
+
+
+Grammar
+
+    0 $accept: Prog EOF_TOK
+
+    1 Prog: Decls Body
+
+    2 Id: IDENT_TOK
+
+    3 Decls: Decl Decls
+    4      | %empty
+
+    5 Decl: Type IdList SEMICOLON_TOK
+
+    6 IdList: IdList COMMA_TOK Id
+    7       | Id
+
+    8 Type: INT_TOK
+    9     | CHAR_TOK
+
+   10 Body: MAIN_TOK LBRACE_TOK StmtSeq RBRACE_TOK
+
+   11 StmtSeq: Stmt SEMICOLON_TOK StmtSeq
+   12        | %empty
+
+   13 Stmt: PUT_TOK LPAREN_TOK Factor RPAREN_TOK
+   14     | AssignStmt
+   15     | Expr
+
+   16 AssignStmt: LVal ASSIGN_TOK Expr
+
+   17 LVal: Id
+
+   18 Expr: Term AddOp Expr
+   19     | Term
+
+   20 Term: Factor MultOp Term
+   21     | Factor
+
+   22 Factor: LPAREN_TOK Expr RPAREN_TOK
+   23       | GET_TOK LPAREN_TOK Type RPAREN_TOK
+   24       | MINUS_TOK Factor
+   25       | INTLIT_TOK
+   26       | CHRLIT_TOK
+   27       | Id
+
+   28 AddOp: MINUS_TOK
+   29      | PLUS_TOK
+
+   30 MultOp: TIMES_TOK
+   31       | DIV_TOK
+
+
+Terminals, with rules where they appear
+
+EOF_TOK (0) 0
+IDENT_TOK (1) 2
+INT_TOK (2) 8
+CHAR_TOK (3) 9
+MAIN_TOK (4) 10
+LBRACE_TOK (5) 10
+RBRACE_TOK (6) 10
+SEMICOLON_TOK (7) 5 11
+COLON_TOK (8)
+COMMA_TOK (9) 6
+INTLIT_TOK (10) 25
+CHRLIT_TOK (11) 26
+ASSIGN_TOK (12) 16
+LPAREN_TOK (13) 13 22 23
+RPAREN_TOK (14) 13 22 23
+MINUS_TOK (15) 24 28
+PLUS_TOK (16) 29
+TIMES_TOK (17) 30
+DIV_TOK (18) 31
+GET_TOK (19) 23
+PUT_TOK (20) 13
+error (256)
+
+
+Nonterminals, with rules where they appear
+
+$accept (23)
+    on left: 0
+Prog (24)
+    on left: 1, on right: 0
+Id (25)
+    on left: 2, on right: 6 7 17 27
+Decls (26)
+    on left: 3 4, on right: 1 3
+Decl (27)
+    on left: 5, on right: 3
+IdList (28)
+    on left: 6 7, on right: 5 6
+Type (29)
+    on left: 8 9, on right: 5 23
+Body (30)
+    on left: 10, on right: 1
+StmtSeq (31)
+    on left: 11 12, on right: 10 11
+Stmt (32)
+    on left: 13 14 15, on right: 11
+AssignStmt (33)
+    on left: 16, on right: 14
+LVal (34)
+    on left: 17, on right: 16
+Expr (35)
+    on left: 18 19, on right: 15 16 18 22
+Term (36)
+    on left: 20 21, on right: 18 19 20
+Factor (37)
+    on left: 22 23 24 25 26 27, on right: 13 20 21 24
+AddOp (38)
+    on left: 28 29, on right: 18
+MultOp (39)
+    on left: 30 31, on right: 20
+
+
+State 0
+
+    0 $accept: . Prog EOF_TOK
+
+    INT_TOK   shift, and go to state 1
+    CHAR_TOK  shift, and go to state 2
+
+    $default  reduce using rule 4 (Decls)
+
+    Prog   go to state 3
+    Decls  go to state 4
+    Decl   go to state 5
+    Type   go to state 6
+
+
+State 1
+
+    8 Type: INT_TOK .
+
+    $default  reduce using rule 8 (Type)
+
+
+State 2
+
+    9 Type: CHAR_TOK .
+
+    $default  reduce using rule 9 (Type)
+
+
+State 3
+
+    0 $accept: Prog . EOF_TOK
+
+    EOF_TOK  shift, and go to state 7
+
+
+State 4
+
+    1 Prog: Decls . Body
+
+    MAIN_TOK  shift, and go to state 8
+
+    Body  go to state 9
+
+
+State 5
+
+    3 Decls: Decl . Decls
+
+    INT_TOK   shift, and go to state 1
+    CHAR_TOK  shift, and go to state 2
+
+    $default  reduce using rule 4 (Decls)
+
+    Decls  go to state 10
+    Decl   go to state 5
+    Type   go to state 6
+
+
+State 6
+
+    5 Decl: Type . IdList SEMICOLON_TOK
+
+    IDENT_TOK  shift, and go to state 11
+
+    Id      go to state 12
+    IdList  go to state 13
+
+
+State 7
+
+    0 $accept: Prog EOF_TOK .
+
+    $default  accept
+
+
+State 8
+
+   10 Body: MAIN_TOK . LBRACE_TOK StmtSeq RBRACE_TOK
+
+    LBRACE_TOK  shift, and go to state 14
+
+
+State 9
+
+    1 Prog: Decls Body .
+
+    $default  reduce using rule 1 (Prog)
+
+
+State 10
+
+    3 Decls: Decl Decls .
+
+    $default  reduce using rule 3 (Decls)
+
+
+State 11
+
+    2 Id: IDENT_TOK .
+
+    $default  reduce using rule 2 (Id)
+
+
+State 12
+
+    7 IdList: Id .
+
+    $default  reduce using rule 7 (IdList)
+
+
+State 13
+
+    5 Decl: Type IdList . SEMICOLON_TOK
+    6 IdList: IdList . COMMA_TOK Id
+
+    SEMICOLON_TOK  shift, and go to state 15
+    COMMA_TOK      shift, and go to state 16
+
+
+State 14
+
+   10 Body: MAIN_TOK LBRACE_TOK . StmtSeq RBRACE_TOK
+
+    IDENT_TOK   shift, and go to state 11
+    INTLIT_TOK  shift, and go to state 17
+    CHRLIT_TOK  shift, and go to state 18
+    LPAREN_TOK  shift, and go to state 19
+    MINUS_TOK   shift, and go to state 20
+    GET_TOK     shift, and go to state 21
+    PUT_TOK     shift, and go to state 22
+
+    $default  reduce using rule 12 (StmtSeq)
+
+    Id          go to state 23
+    StmtSeq     go to state 24
+    Stmt        go to state 25
+    AssignStmt  go to state 26
+    LVal        go to state 27
+    Expr        go to state 28
+    Term        go to state 29
+    Factor      go to state 30
+
+
+State 15
+
+    5 Decl: Type IdList SEMICOLON_TOK .
+
+    $default  reduce using rule 5 (Decl)
+
+
+State 16
+
+    6 IdList: IdList COMMA_TOK . Id
+
+    IDENT_TOK  shift, and go to state 11
+
+    Id  go to state 31
+
+
+State 17
+
+   25 Factor: INTLIT_TOK .
+
+    $default  reduce using rule 25 (Factor)
+
+
+State 18
+
+   26 Factor: CHRLIT_TOK .
+
+    $default  reduce using rule 26 (Factor)
+
+
+State 19
+
+   22 Factor: LPAREN_TOK . Expr RPAREN_TOK
+
+    IDENT_TOK   shift, and go to state 11
+    INTLIT_TOK  shift, and go to state 17
+    CHRLIT_TOK  shift, and go to state 18
+    LPAREN_TOK  shift, and go to state 19
+    MINUS_TOK   shift, and go to state 20
+    GET_TOK     shift, and go to state 21
+
+    Id      go to state 32
+    Expr    go to state 33
+    Term    go to state 29
+    Factor  go to state 30
+
+
+State 20
+
+   24 Factor: MINUS_TOK . Factor
+
+    IDENT_TOK   shift, and go to state 11
+    INTLIT_TOK  shift, and go to state 17
+    CHRLIT_TOK  shift, and go to state 18
+    LPAREN_TOK  shift, and go to state 19
+    MINUS_TOK   shift, and go to state 20
+    GET_TOK     shift, and go to state 21
+
+    Id      go to state 32
+    Factor  go to state 34
+
+
+State 21
+
+   23 Factor: GET_TOK . LPAREN_TOK Type RPAREN_TOK
+
+    LPAREN_TOK  shift, and go to state 35
+
+
+State 22
+
+   13 Stmt: PUT_TOK . LPAREN_TOK Factor RPAREN_TOK
+
+    LPAREN_TOK  shift, and go to state 36
+
+
+State 23
+
+   17 LVal: Id .
+   27 Factor: Id .
+
+    ASSIGN_TOK  reduce using rule 17 (LVal)
+    $default    reduce using rule 27 (Factor)
+
+
+State 24
+
+   10 Body: MAIN_TOK LBRACE_TOK StmtSeq . RBRACE_TOK
+
+    RBRACE_TOK  shift, and go to state 37
+
+
+State 25
+
+   11 StmtSeq: Stmt . SEMICOLON_TOK StmtSeq
+
+    SEMICOLON_TOK  shift, and go to state 38
+
+
+State 26
+
+   14 Stmt: AssignStmt .
+
+    $default  reduce using rule 14 (Stmt)
+
+
+State 27
+
+   16 AssignStmt: LVal . ASSIGN_TOK Expr
+
+    ASSIGN_TOK  shift, and go to state 39
+
+
+State 28
+
+   15 Stmt: Expr .
+
+    $default  reduce using rule 15 (Stmt)
+
+
+State 29
+
+   18 Expr: Term . AddOp Expr
+   19     | Term .
+
+    MINUS_TOK  shift, and go to state 40
+    PLUS_TOK   shift, and go to state 41
+
+    $default  reduce using rule 19 (Expr)
+
+    AddOp  go to state 42
+
+
+State 30
+
+   20 Term: Factor . MultOp Term
+   21     | Factor .
+
+    TIMES_TOK  shift, and go to state 43
+    DIV_TOK    shift, and go to state 44
+
+    $default  reduce using rule 21 (Term)
+
+    MultOp  go to state 45
+
+
+State 31
+
+    6 IdList: IdList COMMA_TOK Id .
+
+    $default  reduce using rule 6 (IdList)
+
+
+State 32
+
+   27 Factor: Id .
+
+    $default  reduce using rule 27 (Factor)
+
+
+State 33
+
+   22 Factor: LPAREN_TOK Expr . RPAREN_TOK
+
+    RPAREN_TOK  shift, and go to state 46
+
+
+State 34
+
+   24 Factor: MINUS_TOK Factor .
+
+    $default  reduce using rule 24 (Factor)
+
+
+State 35
+
+   23 Factor: GET_TOK LPAREN_TOK . Type RPAREN_TOK
+
+    INT_TOK   shift, and go to state 1
+    CHAR_TOK  shift, and go to state 2
+
+    Type  go to state 47
+
+
+State 36
+
+   13 Stmt: PUT_TOK LPAREN_TOK . Factor RPAREN_TOK
+
+    IDENT_TOK   shift, and go to state 11
+    INTLIT_TOK  shift, and go to state 17
+    CHRLIT_TOK  shift, and go to state 18
+    LPAREN_TOK  shift, and go to state 19
+    MINUS_TOK   shift, and go to state 20
+    GET_TOK     shift, and go to state 21
+
+    Id      go to state 32
+    Factor  go to state 48
+
+
+State 37
+
+   10 Body: MAIN_TOK LBRACE_TOK StmtSeq RBRACE_TOK .
+
+    $default  reduce using rule 10 (Body)
+
+
+State 38
+
+   11 StmtSeq: Stmt SEMICOLON_TOK . StmtSeq
+
+    IDENT_TOK   shift, and go to state 11
+    INTLIT_TOK  shift, and go to state 17
+    CHRLIT_TOK  shift, and go to state 18
+    LPAREN_TOK  shift, and go to state 19
+    MINUS_TOK   shift, and go to state 20
+    GET_TOK     shift, and go to state 21
+    PUT_TOK     shift, and go to state 22
+
+    $default  reduce using rule 12 (StmtSeq)
+
+    Id          go to state 23
+    StmtSeq     go to state 49
+    Stmt        go to state 25
+    AssignStmt  go to state 26
+    LVal        go to state 27
+    Expr        go to state 28
+    Term        go to state 29
+    Factor      go to state 30
+
+
+State 39
+
+   16 AssignStmt: LVal ASSIGN_TOK . Expr
+
+    IDENT_TOK   shift, and go to state 11
+    INTLIT_TOK  shift, and go to state 17
+    CHRLIT_TOK  shift, and go to state 18
+    LPAREN_TOK  shift, and go to state 19
+    MINUS_TOK   shift, and go to state 20
+    GET_TOK     shift, and go to state 21
+
+    Id      go to state 32
+    Expr    go to state 50
+    Term    go to state 29
+    Factor  go to state 30
+
+
+State 40
+
+   28 AddOp: MINUS_TOK .
+
+    $default  reduce using rule 28 (AddOp)
+
+
+State 41
+
+   29 AddOp: PLUS_TOK .
+
+    $default  reduce using rule 29 (AddOp)
+
+
+State 42
+
+   18 Expr: Term AddOp . Expr
+
+    IDENT_TOK   shift, and go to state 11
+    INTLIT_TOK  shift, and go to state 17
+    CHRLIT_TOK  shift, and go to state 18
+    LPAREN_TOK  shift, and go to state 19
+    MINUS_TOK   shift, and go to state 20
+    GET_TOK     shift, and go to state 21
+
+    Id      go to state 32
+    Expr    go to state 51
+    Term    go to state 29
+    Factor  go to state 30
+
+
+State 43
+
+   30 MultOp: TIMES_TOK .
+
+    $default  reduce using rule 30 (MultOp)
+
+
+State 44
+
+   31 MultOp: DIV_TOK .
+
+    $default  reduce using rule 31 (MultOp)
+
+
+State 45
+
+   20 Term: Factor MultOp . Term
+
+    IDENT_TOK   shift, and go to state 11
+    INTLIT_TOK  shift, and go to state 17
+    CHRLIT_TOK  shift, and go to state 18
+    LPAREN_TOK  shift, and go to state 19
+    MINUS_TOK   shift, and go to state 20
+    GET_TOK     shift, and go to state 21
+
+    Id      go to state 32
+    Term    go to state 52
+    Factor  go to state 30
+
+
+State 46
+
+   22 Factor: LPAREN_TOK Expr RPAREN_TOK .
+
+    $default  reduce using rule 22 (Factor)
+
+
+State 47
+
+   23 Factor: GET_TOK LPAREN_TOK Type . RPAREN_TOK
+
+    RPAREN_TOK  shift, and go to state 53
+
+
+State 48
+
+   13 Stmt: PUT_TOK LPAREN_TOK Factor . RPAREN_TOK
+
+    RPAREN_TOK  shift, and go to state 54
+
+
+State 49
+
+   11 StmtSeq: Stmt SEMICOLON_TOK StmtSeq .
+
+    $default  reduce using rule 11 (StmtSeq)
+
+
+State 50
+
+   16 AssignStmt: LVal ASSIGN_TOK Expr .
+
+    $default  reduce using rule 16 (AssignStmt)
+
+
+State 51
+
+   18 Expr: Term AddOp Expr .
+
+    $default  reduce using rule 18 (Expr)
+
+
+State 52
+
+   20 Term: Factor MultOp Term .
+
+    $default  reduce using rule 20 (Term)
+
+
+State 53
+
+   23 Factor: GET_TOK LPAREN_TOK Type RPAREN_TOK .
+
+    $default  reduce using rule 23 (Factor)
+
+
+State 54
+
+   13 Stmt: PUT_TOK LPAREN_TOK Factor RPAREN_TOK .
+
+    $default  reduce using rule 13 (Stmt)

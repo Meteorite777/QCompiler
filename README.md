@@ -1,5 +1,12 @@
 # CS 442 - Compiler Construction
 ## Semantics Part I
+Authors: Dr. Steven Senger
+		 Nicholas C Frank
+Date: 5/14/2016
+
+Most of the implementation of a compiler for a pseudo-language called Q which contains most of the functions you would come to expect in a modern day language such as variable evaluation and assignment, nesting, if/then statments, loops, etc. 
+This implementation is written in C and compiles the Q into MIPS assembly. If you take a look into the makefile you will see the commands to test the respective parts of the compiler such as the symbol table, scanner, parser, and grammar evaluation. 
+Credit to Dr. Steven Senger creating the assignment and most of the stubs, structure, ReadMe', and general direction in writing this compiler.
 
 This repository contains files to be addded to your main project repository to include the semantic processing capabilities to compile programs of the language Q. The repository contains
 
